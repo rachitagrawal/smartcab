@@ -47,7 +47,7 @@ class LearningAgent(Agent):
             self.alpha = 0
         else:
             #if self.epsilon > 0.05 and self.trials != 1:
-                #self.epsilon = self.epsilon - 0.05
+            #    self.epsilon = self.epsilon - 0.05
             #self.epsilon *= 0.99
             a = 0.99
             self.epsilon = a ** self.trials
@@ -92,11 +92,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        values = list()
-        for action in self.Q[state].keys():
-            values.append(self.Q[state][action])
-
-        maxQ = max(values)
+        maxQ = max(self.Q[state].values())
 
         return maxQ 
 
@@ -136,10 +132,13 @@ class LearningAgent(Agent):
                 action = random.choice(self.valid_actions)
             else:
                 curMaxQ = self.get_maxQ(state)
+                bestActions = list()
                 for cur_action in self.valid_actions:
                     if self.Q[state][cur_action] == curMaxQ:
-                        action = cur_action
+                        bestActions.append(cur_action)
 
+                        
+                action = random.choice(bestActions)
         
         ########### 
         ## TO DO ##
